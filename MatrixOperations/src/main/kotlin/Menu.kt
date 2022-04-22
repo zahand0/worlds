@@ -27,14 +27,16 @@ object Menu {
     private fun chooseAction() {
         print(scanChoiceLine)
         try {
-            val result = when (readln().toIntOrNull()) {
-                1 -> Matrix.addMatrices()
-                2 -> Matrix.multiplyByConst()
+            when (readln().toIntOrNull()) {
+                1 -> Matrix.sumMatrices()
+                2 -> Matrix.multiplyByConstant()
                 3 -> Matrix.multiplyMatrices()
                 0 -> exit()
-                else -> false
+                else -> wrongInput()
             }
-            if (!result) wrongInput()
+        }
+        catch (e: IllegalStateException) {
+            wrongInput()
         }
         catch (e: Exception) {
             wrongInput()
