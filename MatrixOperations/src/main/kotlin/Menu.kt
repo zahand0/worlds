@@ -18,6 +18,9 @@ object Menu {
     private var exit = false
 
     fun menuLoop() {
+        /**
+         * Main program loop with action choosing
+         */
         while (!exit) {
             showMenu()
             chooseAction()
@@ -25,6 +28,9 @@ object Menu {
     }
 
     private fun showMenu() {
+        /**
+         * Shows menu of actions
+         */
         for (index in 0 until listOfAction.lastIndex) {
             println("${index + 1}. ${listOfAction[index]}")
         }
@@ -32,12 +38,18 @@ object Menu {
     }
 
     private fun showTransposeActions() {
+        /**
+         * Shows menu of Transpose matrix actions
+         */
         for (index in listOfTransposeAction.indices) {
             println("${index + 1}. ${listOfTransposeAction[index]}")
         }
     }
 
     private fun chooseAction() {
+        /**
+         * Getting number of action and execute relevant function
+         */
         print(scanChoiceLine)
         try {
             when (readln().toIntOrNull()) {
@@ -57,6 +69,9 @@ object Menu {
     }
 
     private fun transposeMatrix() {
+        /**
+         * Getting number of transpose matrix action and execute relevant function
+         */
         println()
         showTransposeActions()
         print(scanChoiceLine)
@@ -67,14 +82,19 @@ object Menu {
             4 -> Matrix.transposeMatrixHorizontalLine()
             else -> wrongInput()
         }
-//        println()
     }
 
     private fun wrongInput() {
+        /**
+         * Printing line with error message
+         */
         println(wrongInputLine)
     }
 
     private fun exit(): Boolean {
+        /**
+         * Closing program
+         */
         exit = true
         return true
     }
