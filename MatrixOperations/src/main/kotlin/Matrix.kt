@@ -1,16 +1,21 @@
 data class Matrix(var rows: Int, var columns: Int) {
     enum class Type {
+        /**
+         * Matrix type
+         */
         Int,
         Double
     }
 
-    private var type = Type.Double
+    private var type = Type.Double // default value is Double
+    // elements of matrix, stored in Double
     var elements: MutableList<MutableList<Double>> = mutableListOf()
         set(value) {
             if (value.isEmpty()) throw IllegalStateException("Matrix can't be empty")
             if (value.size != rows || value.first().size != columns)
                 throw IllegalStateException("Matrix actual size != input size")
             field = value
+            // setting type of matrix
             type = determineMatrixType(value)
         }
 
@@ -19,12 +24,18 @@ data class Matrix(var rows: Int, var columns: Int) {
         private const val lineSecond = " second"
 
         private fun readMatrix(name: String = ""): Matrix {
+            /**
+             * Reading matrix sizes and 2-dimensional list<Double>
+             *
+             * return: actual Matrix instance
+             */
             try {
                 print("Enter size of$name matrix: ")
                 val (rows, columns) = readln().split(" ").map { it.toInt() }
                 println("Enter$name matrix:")
                 val stringMatrix = List(rows) { readln().split(" ") }
                 val matrix = Matrix(rows, columns)
+                // transform list of String to Double
                 matrix.elements = stringMatrix.map { row ->
                     row.map { it.toDouble() }.toMutableList()
                 }.toMutableList()
@@ -35,6 +46,9 @@ data class Matrix(var rows: Int, var columns: Int) {
         }
 
         fun multiplyMatrices() {
+            /**
+             * Reading 2 matrices, print result of multiplying them
+             */
             val matrix1 = readMatrix(lineFirst)
             val matrix2 = readMatrix(lineSecond)
 
@@ -42,6 +56,9 @@ data class Matrix(var rows: Int, var columns: Int) {
         }
 
         fun sumMatrices() {
+            /**
+             * Reading 2 matrices, print result of summing them
+             */
             val matrix1 = readMatrix(lineFirst)
             val matrix2 = readMatrix(lineSecond)
 
@@ -49,8 +66,12 @@ data class Matrix(var rows: Int, var columns: Int) {
         }
 
         fun multiplyByConstant() {
+            /**
+             * Reading matrix and constant, print result of multiplying them
+             */
             val matrix1 = readMatrix()
-            val constant = readConstant()
+            val constant = readConstant() // read as Double
+            // if constant is actually int type
             if (constant % 1.0 == 0.0)
                 printMatrix(matrix1.multiply(constant.toInt()))
             else
@@ -58,6 +79,11 @@ data class Matrix(var rows: Int, var columns: Int) {
         }
 
         private fun readConstant(): Double {
+            /**
+             * Reading constant
+             *
+             * return: Double type number
+             */
             print("Enter constant:")
             println()
             return readln().toDouble()
@@ -83,30 +109,51 @@ data class Matrix(var rows: Int, var columns: Int) {
             rowsSecond: Int,
             columnsSecond: Int
         ): Boolean {
+            /**
+             * Checking if num of first matrix rows equal to num of second matrix rows and
+             * num of first matrix columns equal to num of second matrix columns
+             */
             return rowsFirst == rowsSecond && columnsFirst == columnsSecond
         }
 
         private fun determineMatrixType(matrix: List<List<Double>>): Type {
+            /**
+             * Check if all matrix elements is Int or Double
+             *
+             * return: Type.Int or Type.Double
+             */
             matrix.forEach { row -> row.forEach { if (it % 1.0 != 0.0) return Type.Double } }
             return Type.Int
         }
 
         fun transposeMatrix() {
+            /**
+             * Reading matrix, print result of transposing it
+             */
             val matrix1 = readMatrix()
             printMatrix(matrix1.transpose())
         }
 
         fun transposeMatrixSideDiagonal() {
+            /**
+             * Reading matrix, print result of side diagonal transposing it
+             */
             val matrix1 = readMatrix()
             printMatrix(matrix1.transposeSideDiagonal())
         }
 
         fun transposeMatrixVerticalLine() {
+            /**
+             * Reading matrix, print result of vertically transposing it
+             */
             val matrix1 = readMatrix()
             printMatrix(matrix1.transposeVertical())
         }
 
         fun transposeMatrixHorizontalLine() {
+            /**
+             * Reading matrix, print result of horizontally transposing it
+             */
             val matrix1 = readMatrix()
             printMatrix(matrix1.transposeHorizontal())
         }
