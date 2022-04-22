@@ -57,6 +57,8 @@ object Menu {
     }
 
     private fun transposeMatrix() {
+        println()
+        showTransposeActions()
         print(scanChoiceLine)
         when (readln().toIntOrNull()) {
             1 -> Matrix.transposeMatrix()
