@@ -173,7 +173,7 @@ data class Matrix(var rows: Int, var columns: Int) {
         val newElements = MutableList(columns) { MutableList(rows) { 0.0 } }
         for (row in 0 until rows) {
             for (column in 0 until columns) {
-                newElements[column][rows - row - 1] = elements[row][column]
+                newElements[columns - column - 1][rows - row - 1] = elements[row][column]
             }
         }
         rows = columns.also { columns = rows }
