@@ -6,6 +6,7 @@ object Menu {
         "Add matrices",
         "Multiply matrix by a constant",
         "Multiply matrices",
+        "Transpose matrix",
         "Exit"
     )
     private var exit = false
@@ -31,6 +32,7 @@ object Menu {
                 1 -> Matrix.sumMatrices()
                 2 -> Matrix.multiplyByConstant()
                 3 -> Matrix.multiplyMatrices()
+                4 -> transposeMatrix()
                 0 -> exit()
                 else -> wrongInput()
             }
@@ -42,6 +44,10 @@ object Menu {
             wrongInput()
         }
         println()
+    }
+
+    private fun transposeMatrix() {
+        TODO("Not yet implemented")
     }
 
     private fun wrongInput() {
