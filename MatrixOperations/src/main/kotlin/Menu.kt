@@ -48,34 +48,24 @@ object Menu {
                 0 -> exit()
                 else -> wrongInput()
             }
-        }
-        catch (e: IllegalStateException) {
+        } catch (e: IllegalStateException) {
             wrongInput()
-        }
-        catch (e: Exception) {
+        } catch (e: Exception) {
             wrongInput()
         }
         println()
     }
 
     private fun transposeMatrix() {
-        try {
-            when (readln().toIntOrNull()) {
-                1 -> Matrix.sumMatrices()
-                2 -> Matrix.multiplyByConstant()
-                3 -> Matrix.multiplyMatrices()
-                4 -> transposeMatrix()
-                0 -> exit()
-                else -> wrongInput()
-            }
+        print(scanChoiceLine)
+        when (readln().toIntOrNull()) {
+            1 -> Matrix.transposeMatrix()
+            2 -> Matrix.transposeMatrixSideDiagonal()
+            3 -> Matrix.transposeMatrixVerticalLine()
+            4 -> Matrix.transposeMatrixHorizontalLine()
+            else -> wrongInput()
         }
-        catch (e: IllegalStateException) {
-            wrongInput()
-        }
-        catch (e: Exception) {
-            wrongInput()
-        }
-        println()
+//        println()
     }
 
     private fun wrongInput() {
