@@ -85,11 +85,27 @@ data class Matrix(var rows: Int, var columns: Int) {
         ): Boolean {
             return rowsFirst == rowsSecond && columnsFirst == columnsSecond
         }
-    }
 
-    private fun determineMatrixType(matrix: List<List<Double>>): Type {
-        matrix.forEach { row -> row.forEach { if (it % 1.0 != 0.0) return Type.Double } }
-        return Type.Int
+        private fun determineMatrixType(matrix: List<List<Double>>): Type {
+            matrix.forEach { row -> row.forEach { if (it % 1.0 != 0.0) return Type.Double } }
+            return Type.Int
+        }
+
+        fun transposeMatrix() {
+            TODO("Not yet implemented")
+        }
+
+        fun transposeMatrixSideDiagonal() {
+            TODO("Not yet implemented")
+        }
+
+        fun transposeMatrixVerticalLine() {
+            TODO("Not yet implemented")
+        }
+
+        fun transposeMatrixHorizontalLine() {
+            TODO("Not yet implemented")
+        }
     }
 
     fun add(other: Matrix): Matrix {
