@@ -92,19 +92,23 @@ data class Matrix(var rows: Int, var columns: Int) {
         }
 
         fun transposeMatrix() {
-            TODO("Not yet implemented")
+            val matrix1 = readMatrix()
+            printMatrix(matrix1.transpose())
         }
 
         fun transposeMatrixSideDiagonal() {
-            TODO("Not yet implemented")
+            val matrix1 = readMatrix()
+            printMatrix(matrix1.transposeSideDiagonal())
         }
 
         fun transposeMatrixVerticalLine() {
-            TODO("Not yet implemented")
+            val matrix1 = readMatrix()
+            printMatrix(matrix1.transposeVertical())
         }
 
         fun transposeMatrixHorizontalLine() {
-            TODO("Not yet implemented")
+            val matrix1 = readMatrix()
+            printMatrix(matrix1.transposeHorizontal())
         }
     }
 
@@ -150,6 +154,52 @@ data class Matrix(var rows: Int, var columns: Int) {
         }
         columns = other.columns
         elements = resultElements
+        return this
+    }
+
+    fun transpose(): Matrix {
+        val newElements = MutableList(columns) { MutableList(rows) { 0.0 } }
+        for (row in 0 until rows) {
+            for (column in 0 until columns) {
+                newElements[column][row] = elements[row][column]
+            }
+        }
+        rows = columns.also { columns = rows }
+        elements = newElements
+        return this
+    }
+
+    fun transposeSideDiagonal(): Matrix {
+        val newElements = MutableList(columns) { MutableList(rows) { 0.0 } }
+        for (row in 0 until rows) {
+            for (column in 0 until columns) {
+                newElements[column][rows - row - 1] = elements[row][column]
+            }
+        }
+        rows = columns.also { columns = rows }
+        elements = newElements
+        return this
+    }
+
+    fun transposeVertical(): Matrix {
+        for (row in 0 until rows) {
+            for (column in 0 until columns / 2) {
+                elements[row][column] = elements[row][columns - column - 1].also {
+                    elements[row][columns - column - 1] = elements[row][column]
+                }
+            }
+        }
+        return this
+    }
+
+    fun transposeHorizontal(): Matrix {
+        for (row in 0 until rows / 2) {
+            for (column in 0 until columns) {
+                elements[row][column] = elements[rows - row - 1][column].also {
+                    elements[rows - row - 1][column] = elements[row][column]
+                }
+            }
+        }
         return this
     }
 
