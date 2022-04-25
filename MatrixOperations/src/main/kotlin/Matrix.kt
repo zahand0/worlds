@@ -157,6 +157,32 @@ data class Matrix(var rows: Int, var columns: Int) {
             val matrix1 = readMatrix()
             printMatrix(matrix1.transposeHorizontal())
         }
+
+        fun matrixDeterminant() {
+            val matrix = readMatrix()
+            println(matrix.determinant())
+        }
+    }
+
+    private fun determinant(): Double {
+        if (rows != columns) throw IllegalStateException("Matrix must square")
+        if (rows == 1) return elements[0][0]
+        var determinant = 0.0
+        for (column in 0 until columns) {
+            determinant += elements[0][column] * getMinor(0, column).determinant()
+        }
+        return determinant
+    }
+
+    fun getMinor(row: Int, col: Int): Matrix {
+        val newMatrix = Matrix(rows - 1, columns - 1)
+        for (rowInd in 0..(rows - 2)) {
+            newMatrix.elements.add(mutableListOf())
+            for (columnInd in 0..(columns - 2)) {
+                newMatrix.elements[rowInd].add()
+                TODO("update range (exclude row and col) and add element to list")
+            }
+        }
     }
 
     fun add(other: Matrix): Matrix {
