@@ -8,6 +8,7 @@ object Menu {
         "Multiply matrices",
         "Transpose matrix",
         "Calculate a determinant",
+        "Inverse matrix",
         "Exit"
     )
     private val listOfTransposeAction = listOf(
@@ -59,6 +60,7 @@ object Menu {
                 3 -> Matrix.multiplyMatrices()
                 4 -> transposeMatrix()
                 5 -> Matrix.matrixDeterminant()
+                6 -> Matrix.inverseMatrix()
                 0 -> exit()
                 else -> wrongInput()
             }
