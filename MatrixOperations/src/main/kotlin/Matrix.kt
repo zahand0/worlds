@@ -160,7 +160,8 @@ data class Matrix(var rows: Int, var columns: Int) {
 
         fun matrixDeterminant() {
             val matrix = readMatrix()
-            println(matrix.determinant())
+            println("The result is:")
+            println(if (matrix.type == Type.Int) matrix.determinant().toInt() else matrix.determinant())
         }
     }
 
@@ -169,20 +170,25 @@ data class Matrix(var rows: Int, var columns: Int) {
         if (rows == 1) return elements[0][0]
         var determinant = 0.0
         for (column in 0 until columns) {
-            determinant += elements[0][column] * getMinor(0, column).determinant()
+            val sign = if (column and 1 == 0) 1 else -1
+            determinant += elements[0][column] * getMinor(0, column).determinant() * sign
         }
         return determinant
     }
 
     fun getMinor(row: Int, col: Int): Matrix {
-        val newMatrix = Matrix(rows - 1, columns - 1)
-        for (rowInd in 0..(rows - 2)) {
-            newMatrix.elements.add(mutableListOf())
-            for (columnInd in 0..(columns - 2)) {
-                newMatrix.elements[rowInd].add()
-                TODO("update range (exclude row and col) and add element to list")
+        val newMatrixElements: MutableList<MutableList<Double>> = mutableListOf()
+        for (rowInd in 0 until rows) {
+            if (rowInd == row) continue
+            newMatrixElements.add(mutableListOf())
+            for (columnInd in 0 until columns) {
+                if (columnInd == col) continue
+                newMatrixElements[newMatrixElements.lastIndex].add(elements[rowInd][columnInd])
             }
         }
+        val newMatrix = Matrix(rows - 1, columns - 1)
+        newMatrix.elements = newMatrixElements
+        return newMatrix
     }
 
     fun add(other: Matrix): Matrix {
