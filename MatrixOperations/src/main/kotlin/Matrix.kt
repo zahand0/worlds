@@ -159,39 +159,63 @@ data class Matrix(var rows: Int, var columns: Int) {
         }
 
         fun matrixDeterminant() {
+            /**
+             * Reading matrix, print its determinant
+             */
             val matrix = readMatrix()
             println("The result is:")
+            // if matrix type is int print int value
             println(if (matrix.type == Type.Int) matrix.determinant().toInt() else matrix.determinant())
         }
     }
 
     private fun determinant(): Double {
+        /**
+         * Calculating matix determinant
+         */
+        // matrix must be square
         if (rows != columns) throw IllegalStateException("Matrix must square")
+        // if matrix size is 1x1 result its element
         if (rows == 1) return elements[0][0]
         var determinant = 0.0
         for (column in 0 until columns) {
+            // if indexes sum is divided by 2, then minor adds with + sign (row index always equal 0)
             val sign = if (column and 1 == 0) 1 else -1
+            // recursive call to calculate minor determinant
             determinant += elements[0][column] * getMinor(0, column).determinant() * sign
         }
         return determinant
     }
 
     fun getMinor(row: Int, col: Int): Matrix {
+        /**
+         * Return minor of matrix without 'row' row and 'col' column
+         */
+        // creating new elements list
         val newMatrixElements: MutableList<MutableList<Double>> = mutableListOf()
         for (rowInd in 0 until rows) {
+            // skip 'row' row
             if (rowInd == row) continue
             newMatrixElements.add(mutableListOf())
             for (columnInd in 0 until columns) {
+                // skip 'col' column
                 if (columnInd == col) continue
                 newMatrixElements[newMatrixElements.lastIndex].add(elements[rowInd][columnInd])
             }
         }
+        // creating new matrix
         val newMatrix = Matrix(rows - 1, columns - 1)
         newMatrix.elements = newMatrixElements
         return newMatrix
     }
 
     fun add(other: Matrix): Matrix {
+        /**
+         * Adding another matrix
+         *
+         * return: sum of two matrices
+         */
+        // check if matrices have different sizes
         if (!checkMatrixSizes(
                 elements.size,
                 elements.first().size,
@@ -199,7 +223,7 @@ data class Matrix(var rows: Int, var columns: Int) {
                 other.elements.first().size,
             )
         ) throw IllegalStateException("Matrices have different sizes")
-
+        // adding matrices element by element
         elements = elements.mapIndexed { rowInd, row ->
             row.mapIndexed { columnInd, it ->
                 it + other.elements[rowInd][columnInd]
@@ -209,16 +233,26 @@ data class Matrix(var rows: Int, var columns: Int) {
     }
 
     fun multiply(constant: Double): Matrix {
+        /**
+         * Multiply all matrix element by Double constant
+         */
         elements = elements.map { row -> row.map { it * constant }.toMutableList() }.toMutableList()
         return this
     }
 
     fun multiply(constant: Int): Matrix {
+        /**
+         * Multiply all matrix element by Int constant
+         */
         elements = elements.map { row -> row.map { it * constant }.toMutableList() }.toMutableList()
         return this
     }
 
     fun multiply(other: Matrix): Matrix {
+        /**
+         * Multiply by another matrix
+         */
+        // first matrix columns number must be equal to second matrix rows number
         if (elements.first().size != other.elements.size)
             throw IllegalStateException("Matrices have incompatible sizes")
         val resultElements = mutableListOf<MutableList<Double>>()
@@ -237,6 +271,9 @@ data class Matrix(var rows: Int, var columns: Int) {
     }
 
     fun transpose(): Matrix {
+        /**
+         * Transpose matrix
+         */
         val newElements = MutableList(columns) { MutableList(rows) { 0.0 } }
         for (row in 0 until rows) {
             for (column in 0 until columns) {
@@ -249,6 +286,9 @@ data class Matrix(var rows: Int, var columns: Int) {
     }
 
     fun transposeSideDiagonal(): Matrix {
+        /**
+         * Transpose matrix along the side diagonal
+         */
         val newElements = MutableList(columns) { MutableList(rows) { 0.0 } }
         for (row in 0 until rows) {
             for (column in 0 until columns) {
@@ -261,6 +301,9 @@ data class Matrix(var rows: Int, var columns: Int) {
     }
 
     fun transposeVertical(): Matrix {
+        /**
+         * Transpose matrix along the column
+         */
         for (row in 0 until rows) {
             for (column in 0 until columns / 2) {
                 elements[row][column] = elements[row][columns - column - 1].also {
@@ -272,6 +315,9 @@ data class Matrix(var rows: Int, var columns: Int) {
     }
 
     fun transposeHorizontal(): Matrix {
+        /**
+         * Transpose matrix along the row
+         */
         for (row in 0 until rows / 2) {
             for (column in 0 until columns) {
                 elements[row][column] = elements[rows - row - 1][column].also {
