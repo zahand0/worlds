@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Business Card</string>
+    <string name="photo_description">Sergey\'s photo</string>
+    <string name="full_name">Sergey Mulichev</string>
+    <string name="job_title">Android developer</string>
+    <string name="phone_icon_description">Phone number</string>
+    <string name="social_media_icon_description">Social media</string>
+    <string name="email_icon_description">E-mail</string>
+    <string name="phone_number">+7 (987) 696 7049</string>
+    <string name="social_media">\@mulichev</string>
+    <string name="email">mulichev@gmail.com</string>
+</resources>
